@@ -17,12 +17,11 @@
 
 namespace Elcodi\Component\Metric\Core\Bucket;
 
-use Predis\Client as Predis;
-use Predis\CommunicationException;
-
 use Elcodi\Component\Metric\Core\Bucket\Abstracts\AbstractMetricsBucket;
 use Elcodi\Component\Metric\Core\Entity\Interfaces\EntryInterface;
 use Elcodi\Component\Metric\ElcodiMetricTypes;
+use Predis\Client as Predis;
+use Predis\CommunicationException;
 
 /**
  * Class RedisMetricsBucket.
@@ -67,7 +66,7 @@ class RedisMetricsBucket extends AbstractMetricsBucket
      *
      * @param string $token Event
      * @param string $event Token
-     * @param array  $dates Dates
+     * @param array $dates Dates
      *
      * @return int Number of hits
      */
@@ -85,7 +84,7 @@ class RedisMetricsBucket extends AbstractMetricsBucket
 
         return (int)
         $this->doRedisQuery(function () use ($keys) {
-            $this
+            return $this
                 ->redis
                 ->pfCount($keys);
         }, 0);
@@ -96,7 +95,7 @@ class RedisMetricsBucket extends AbstractMetricsBucket
      *
      * @param string $token Event
      * @param string $event Token
-     * @param array  $dates Dates
+     * @param array $dates Dates
      *
      * @return int Number of beacons, given an event and dates
      */
@@ -112,7 +111,7 @@ class RedisMetricsBucket extends AbstractMetricsBucket
             );
 
             $total += $this->doRedisQuery(function () use ($key) {
-                $this
+                return $this
                     ->redis
                     ->get($key . '_total');
             }, 0);
@@ -126,7 +125,7 @@ class RedisMetricsBucket extends AbstractMetricsBucket
      *
      * @param string $token Event
      * @param string $event Token
-     * @param array  $dates Dates
+     * @param array $dates Dates
      *
      * @return int Accumulation of event and given dates
      */
@@ -141,11 +140,12 @@ class RedisMetricsBucket extends AbstractMetricsBucket
                 $date
             );
 
-            $total += $this->doRedisQuery(function () use ($key) {
-                $this
+            $res = $this->doRedisQuery(function () use ($key) {
+                return $this
                     ->redis
                     ->get($key . '_accum');
             }, 0);
+            $total += $res;
         }
 
         return $total;
@@ -162,7 +162,7 @@ class RedisMetricsBucket extends AbstractMetricsBucket
      *
      * @param string $token Event
      * @param string $event Token
-     * @param array  $dates Dates
+     * @param array $dates Dates
      *
      * @return array Distribution with totals
      */
@@ -178,7 +178,7 @@ class RedisMetricsBucket extends AbstractMetricsBucket
             );
 
             $partials = $this->doRedisQuery(function () use ($key) {
-                $this
+                return $this
                     ->redis
                     ->hgetall($key . '_distr');
             }, []);
@@ -198,15 +198,16 @@ class RedisMetricsBucket extends AbstractMetricsBucket
     /**
      * Add metric given hour formatted.
      *
-     * @param EntryInterface $entry          Entry
-     * @param string         $dateTimeFormat DateTime format
+     * @param EntryInterface $entry Entry
+     * @param string $dateTimeFormat DateTime format
      *
      * @return $this Self Object
      */
     private function addWithFormattedHour(
         EntryInterface $entry,
         $dateTimeFormat
-    ) {
+    )
+    {
         $entryKey = $this->generateEntryKey(
             $entry->getToken(),
             $entry->getEvent(),
@@ -249,15 +250,16 @@ class RedisMetricsBucket extends AbstractMetricsBucket
     /**
      * Add beacon unique nb given the key entry.
      *
-     * @param EntryInterface $entry    Entry
-     * @param string         $entryKey Key entry
+     * @param EntryInterface $entry Entry
+     * @param string $entryKey Key entry
      *
      * @return $this Self Object
      */
     private function addBeaconMetricUnique(
         EntryInterface $entry,
         $entryKey
-    ) {
+    )
+    {
         $this->doRedisQuery(function () use ($entry, $entryKey) {
             $this
                 ->redis
@@ -291,21 +293,22 @@ class RedisMetricsBucket extends AbstractMetricsBucket
     /**
      * Add accumulative metric.
      *
-     * @param EntryInterface $entry    Entry
-     * @param string         $entryKey Key entry
+     * @param EntryInterface $entry Entry
+     * @param string $entryKey Key entry
      *
      * @return $this Self Object
      */
     private function addAccumulativeEntry(
         EntryInterface $entry,
         $entryKey
-    ) {
+    )
+    {
         $this->doRedisQuery(function () use ($entry, $entryKey) {
             $this
                 ->redis
                 ->incrby(
                     $entryKey . '_accum',
-                    (int) $entry->getValue()
+                    (int)$entry->getValue()
                 );
         });
 
@@ -315,15 +318,16 @@ class RedisMetricsBucket extends AbstractMetricsBucket
     /**
      * Add distributed metric.
      *
-     * @param EntryInterface $entry    Entry
-     * @param string         $entryKey Key entry
+     * @param EntryInterface $entry Entry
+     * @param string $entryKey Key entry
      *
      * @return $this Self Object
      */
     private function addDistributedEntry(
         EntryInterface $entry,
         $entryKey
-    ) {
+    )
+    {
         $this->doRedisQuery(function () use ($entry, $entryKey) {
             $this
                 ->redis
@@ -343,8 +347,8 @@ class RedisMetricsBucket extends AbstractMetricsBucket
      * If the call catches a connection Exception, then returns the provided
      * default value (false by default)
      *
-     * @param callable $callable     Callable function
-     * @param mixed    $defaultValue Default value to return if exception
+     * @param callable $callable Callable function
+     * @param mixed $defaultValue Default value to return if exception
      *
      * @return mixed Result of the callable or $defaultValue if connection exception
      */
@@ -355,7 +359,6 @@ class RedisMetricsBucket extends AbstractMetricsBucket
         } catch (CommunicationException $communicationException) {
             $result = $defaultValue;
         }
-
         return $result;
     }
 }
