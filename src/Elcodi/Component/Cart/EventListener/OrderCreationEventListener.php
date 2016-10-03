@@ -89,6 +89,10 @@ final class OrderCreationEventListener
             ->getCart()
             ->setOrdered(true);
 
+        foreach ($cart->getCartLines() as $cartLine) {
+            $this->cartObjectManager->flush($cartLine);
+        }
+
         $this->cartObjectManager->flush($cart);
     }
 }
