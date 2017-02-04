@@ -23,6 +23,7 @@ services:
         parent: elcodi.factory.abstract.purchasable
         calls:
             - [setEntityNamespace, ["%elcodi.entity.product_variant.class%"]]
+            - [setUseStock, ["@elcodi.store_uses_stock"]]
             - [setDateTimeFactory, ["@elcodi.factory.datetime"]]
 
     #

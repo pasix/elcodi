@@ -63,7 +63,7 @@
         "mmoreram/simple-doctrine-mapping": "^1.0",
         "mmoreram/symfony-bundle-dependencies": "^1.1.1",
 
-        "sebastian/money": "^1.5",
+        "mathiasverraes/money": "^1.5",
         "knplabs/knp-gaufrette-bundle": "^0.1.7",
         "predis/predis": "^1.0.1",
         "ircmaxell/password-compat": "^1.0",
@@ -135,7 +135,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^2.2",
-        "fabpot/php-cs-fixer": "1.11",
+        "friendsofphp/php-cs-fixer": "1.11",
         "mmoreram/php-formatter": "1.1.0",
         "phpunit/phpunit": "4.8.19"
     },

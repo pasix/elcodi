@@ -20,6 +20,7 @@ namespace Elcodi\Component\Product\Factory;
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Elcodi\Component\Currency\Factory\Abstracts\AbstractPurchasableFactory;
+use Elcodi\Component\Product\ElcodiProductStock;
 use Elcodi\Component\Product\Entity\Variant;
 
 /**
@@ -27,6 +28,27 @@ use Elcodi\Component\Product\Entity\Variant;
  */
 class VariantFactory extends AbstractPurchasableFactory
 {
+    /**
+     * @var bool
+     *
+     * Use use stock
+     */
+    public $useStock = false;
+
+    /**
+     * Set use stock.
+     *
+     * @param bool $useStock Infinite stock
+     *
+     * @return $this Self object
+     */
+    public function setUseStock($useStock = false)
+    {
+        $this->useStock = $useStock;
+
+        return $this;
+    }
+
     /**
      * Creates and returns a pristine Variant instance.
      *
@@ -39,6 +61,10 @@ class VariantFactory extends AbstractPurchasableFactory
     {
         $zeroPrice = $this->createZeroAmountMoney();
 
+        $stock = $this->useStock
+            ? 0
+            : ElcodiProductStock::INFINITE_STOCK;
+
         /**
          * @var Variant $variant
          */
@@ -46,7 +72,7 @@ class VariantFactory extends AbstractPurchasableFactory
         $variant = new $classNamespace();
         $variant
             ->setSku('')
-            ->setStock(0)
+            ->setStock($stock)
             ->setPrice($zeroPrice)
             ->setReducedPrice($zeroPrice)
             ->setImages(new ArrayCollection())
