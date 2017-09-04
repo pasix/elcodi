@@ -105,7 +105,7 @@ class OrderFactory extends AbstractPurchasableFactory
                     new ArrayCollection(),
                     null
                 ),
-                'Order not paid'
+                'Order booked'
             );
 
         $order->setPaymentStateLineStack($paymentStateLineStack);

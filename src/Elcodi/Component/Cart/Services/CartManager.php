@@ -24,6 +24,7 @@ use Elcodi\Component\Cart\EventDispatcher\CartLineEventDispatcher;
 use Elcodi\Component\Cart\Factory\CartFactory;
 use Elcodi\Component\Cart\Factory\CartLineFactory;
 use Elcodi\Component\Product\Entity\Interfaces\PurchasableInterface;
+use Elcodi\Component\Cart\Exception\CartAlreadyOrderedException;
 
 /**
  * Cart manager service.
@@ -136,6 +137,10 @@ class CartManager
         CartInterface $cart,
         CartLineInterface $cartLine
     ) {
+        if ($cart->isOrdered()) {
+            throw CartAlreadyOrderedException::create($cart);
+        }
+
         $cart->removeCartLine($cartLine);
 
         $this
@@ -199,6 +204,10 @@ class CartManager
 
         if (!($cart instanceof CartInterface)) {
             return $this;
+        }
+
+        if ($cart->isOrdered()) {
+            throw CartAlreadyOrderedException::create($cart);
         }
 
         $cartLine->setPurchasable($purchasable);
@@ -283,6 +292,10 @@ class CartManager
             return $this;
         }
 
+        if ($cart->isOrdered()) {
+            throw CartAlreadyOrderedException::create($cart);
+        }
+
         /**
          * If $quantity is an integer and is less or equal than 0, means that
          * full line must be removed.
@@ -340,6 +353,10 @@ class CartManager
         PurchasableInterface $purchasable,
         $quantity
     ) {
+        if ($cart->isOrdered()) {
+            throw CartAlreadyOrderedException::create($cart);
+        }
+
         /**
          * If quantity is not a number or is 0 or less, product is not added
          * into cart.
@@ -395,6 +412,10 @@ class CartManager
         PurchasableInterface $purchasable,
         $quantity
     ) {
+        if ($cart->isOrdered()) {
+            throw CartAlreadyOrderedException::create($cart);
+        }
+
         /**
          * If quantity is not a number or is 0 or less, product is not removed
          * from cart.

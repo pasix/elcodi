@@ -41,6 +41,11 @@ use Elcodi\Component\User\Entity\Interfaces\CustomerInterface;
  */
 class Order implements OrderInterface
 {
+    const PAYMENT_STATE_UNBOOKED = 'unbooked';
+    const PAYMENT_STATE_BOOKED = 'booked';
+
+    const SHIPPING_STATE_CANCELLED = 'cancelled';
+
     use IdentifiableTrait, DateTimeTrait, PriceTrait, DimensionsTrait;
 
     /**
@@ -469,6 +474,25 @@ class Order implements OrderInterface
         $this->deliveryAddress = $deliveryAddress;
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaymentBooked(): bool
+    {
+        return in_array(
+            $this->getPaymentStateLineStack()->getLastStateLine()->getName(),
+            [self::PAYMENT_STATE_BOOKED, self::PAYMENT_STATE_UNBOOKED]
+        );
+    }
+
+    public function isShippingCanceled(): bool
+    {
+        return in_array(
+            $this->getShippingStateLineStack()->getLastStateLine()->getName(),
+            [self::SHIPPING_STATE_CANCELLED]
+        );
     }
 
     /**

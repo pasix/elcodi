@@ -18,6 +18,7 @@
 namespace Elcodi\Component\Cart\Wrapper;
 
 use Elcodi\Component\Cart\Entity\Interfaces\CartInterface;
+use Elcodi\Component\Cart\Entity\Interfaces\OrderInterface;
 use Elcodi\Component\Cart\EventDispatcher\CartEventDispatcher;
 use Elcodi\Component\Cart\Factory\CartFactory;
 use Elcodi\Component\Core\Wrapper\Interfaces\WrapperInterface;
@@ -166,6 +167,15 @@ class CartWrapper implements WrapperInterface
         $customerCart = $customer
             ->getCarts()
             ->filter(function (CartInterface $cart) {
+
+                if (
+                    $cart->getOrder() instanceof OrderInterface
+                    && $cart->getOrder()->isPaymentBooked()
+                    && !$cart->getOrder()->isShippingCanceled()
+                ) {
+                    return true;
+                }
+
                 return !$cart->isOrdered();
             })
             ->first();

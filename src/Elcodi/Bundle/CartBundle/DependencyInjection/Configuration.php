@@ -84,10 +84,11 @@ class Configuration extends AbstractConfiguration
                             ->defaultValue('order_payment_states_machine')
                         ->end()
                         ->scalarNode('point_of_entry')
-                            ->defaultValue('unpaid')
+                            ->defaultValue('unbooked')
                         ->end()
                         ->variableNode('states')
                             ->defaultValue([
+                                ['unbooked', 'book', 'unpaid'],
                                 ['unpaid', 'pay', 'paid'],
                                 ['paid', 'refund', 'refunded'],
                             ])

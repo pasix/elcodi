@@ -268,6 +268,11 @@ interface OrderInterface
     public function setDeliveryAddress(AddressInterface $deliveryAddress);
 
     /**
+     * @return bool
+     */
+    public function isPaymentBooked(): bool;
+
+    /**
      * Get PaymentStateLineStack.
      *
      * @return StateLineStack PaymentStateLineStack
@@ -291,6 +296,11 @@ interface OrderInterface
      * @return StateLineStack ShippingStateLineStack
      */
     public function getShippingStateLineStack();
+
+    /**
+     * @return bool
+     */
+    public function isShippingCanceled(): bool;
 
     /**
      * Sets ShippingStateLineStack.
