@@ -241,4 +241,14 @@ class Variant implements VariantInterface
 
         return $this;
     }
+
+    /**
+     * Get Weight.
+     *
+     * @return int Weight
+     */
+    public function getWeight()
+    {
+        return $this->getProduct()->getWeight();
+    }
 }
