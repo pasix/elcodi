@@ -53,4 +53,9 @@ final class ElcodiCouponTypes
      * Manual enforcement
      */
     const ENFORCEMENT_MANUAL = 2;
+
+    /**
+     * @var string
+     */
+    const CAMPAIGN_TYPE_NEW_CUSTOMER = 'new_customer';
 }

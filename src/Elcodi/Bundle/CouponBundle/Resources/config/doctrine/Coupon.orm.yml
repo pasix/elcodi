@@ -71,6 +71,15 @@ Elcodi\Component\Coupon\Entity\Coupon:
             column: updated_at
             type: datetime
             nullable: true
+        onceForUser:
+            column: once_for_user
+            type: boolean
+            options:
+                default: 0
+        campaignType:
+            column: campaign_type
+            type: string
+            nullable: true
         enabled:
             column: enabled
             type: boolean

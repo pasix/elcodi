@@ -150,6 +150,16 @@ class Coupon implements CouponInterface
     protected $rule;
 
     /**
+     * @var bool
+     */
+    protected $onceForUser;
+
+    /**
+     * @var string | null
+     */
+    protected $campaignType;
+
+    /**
      * Set code.
      *
      * @param string $code Code
@@ -470,6 +480,42 @@ class Coupon implements CouponInterface
     {
         $this->stackable = $stackable;
 
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnceForUser(): bool
+    {
+        return $this->onceForUser;
+    }
+
+    /**
+     * @param bool $onceForUser
+     */
+    public function setOnceForUser(bool $onceForUser)
+    {
+        $this->onceForUser = $onceForUser;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCampaignType()
+    {
+        return $this->campaignType;
+    }
+
+    /**
+     * @param string|null $campaignType
+     */
+    public function setCampaignType(string $campaignType = null)
+    {
+        $this->campaignType = $campaignType;
+        
         return $this;
     }
 

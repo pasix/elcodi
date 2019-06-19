@@ -39,6 +39,11 @@ services:
     #
     # Validator
     #
+    elcodi.component.cart_coupon.services.cart_coupon_customer_validator:
+        class: Elcodi\Component\CartCoupon\Services\CartCouponCustomerValidator
+        arguments:
+            - '@elcodi.repository.order_coupon'
+
     elcodi.validator.cart_coupon_minimum_price:
         class: Elcodi\Component\CartCoupon\Services\CartCouponMinimumPriceValidator
         arguments:

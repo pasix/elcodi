@@ -249,6 +249,30 @@ interface CouponInterface
     public function getRule();
 
     /**
+     * @return bool
+     */
+    public function isOnceForUser(): bool;
+
+    /**
+     * @param bool $onceForUser
+     *
+     * @return $this Self object
+     */
+    public function setOnceForUser(bool $onceForUser);
+
+    /**
+     * @return string|null
+     */
+    public function getCampaignType();
+
+    /**
+     * @param string|null $campaignType
+     * 
+     * @return $this Self object
+     */
+    public function setCampaignType(string $campaignType = null);
+
+    /**
      * Increment used variable by one, and disables it if there are no more
      * available units.
      *
