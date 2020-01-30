@@ -7,6 +7,7 @@ use Elcodi\Component\Cart\Repository\OrderRepository;
 use Elcodi\Component\CartCoupon\Exception\CouponOnceForUserException;
 use Elcodi\Component\CartCoupon\Repository\OrderCouponRepository;
 use Elcodi\Component\Coupon\Entity\Interfaces\CouponInterface;
+use Elcodi\Component\User\Entity\Interfaces\CustomerInterface;
 
 class CartCouponCustomerValidator
 {
@@ -28,6 +29,10 @@ class CartCouponCustomerValidator
             return ;
         }
 
+        if(!$cart->getCustomer() instanceof CustomerInterface) {
+            return ;
+        }
+        
         $r = $this->orderCouponRepository
             ->createQueryBuilder('orderCoupon')
             ->select('count(orderCoupon.id)')

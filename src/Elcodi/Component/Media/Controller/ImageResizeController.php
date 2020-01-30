@@ -22,6 +22,7 @@ use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Elcodi\Component\Media\Entity\Interfaces\ImageInterface;
 use Elcodi\Component\Media\Repository\ImageRepository;
@@ -133,7 +134,7 @@ class ImageResizeController
             ->find($id);
 
         if (!($image instanceof ImageInterface)) {
-            throw new EntityNotFoundException($this->imageRepository->getClassName());
+            throw new NotFoundHttpException($this->imageRepository->getClassName());
         }
 
         return $this->buildResponseFromImage(
