@@ -59,6 +59,13 @@ class Variant implements VariantInterface
     protected $sku;
 
     /**
+     * @var string | null
+     *
+     * Product GTIN
+     */
+    protected $gtin;
+
+    /**
      * @var int
      *
      * Stock available
@@ -99,6 +106,21 @@ class Variant implements VariantInterface
     public function setSku($sku)
     {
         $this->sku = $sku;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGtin()
+    {
+        return $this->gtin;
+    }
+
+    public function setGtin(string $gtin = null): Variant
+    {
+        $this->gtin = $gtin;
 
         return $this;
     }

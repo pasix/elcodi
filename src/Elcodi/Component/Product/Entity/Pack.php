@@ -67,6 +67,13 @@ class Pack implements PackInterface
     protected $sku;
 
     /**
+     * @var string | null
+     *
+     * Pack GTIN
+     */
+    protected $gtin;
+
+    /**
      * @var int
      *
      * Pack type
@@ -384,6 +391,21 @@ class Pack implements PackInterface
     public function setSku($sku)
     {
         $this->sku = $sku;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGtin()
+    {
+        return $this->gtin;
+    }
+
+    public function setGtin(string $gtin = null): Product
+    {
+        $this->gtin = $gtin;
 
         return $this;
     }

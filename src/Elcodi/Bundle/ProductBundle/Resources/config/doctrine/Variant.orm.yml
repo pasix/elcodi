@@ -13,6 +13,11 @@ Elcodi\Component\Product\Entity\Variant:
             type: string
             length: 255
             nullable: true
+        gtin:
+            column: gtin
+            type: string
+            length: 255
+            nullable: true
         stock:
             column: stock
             type: integer

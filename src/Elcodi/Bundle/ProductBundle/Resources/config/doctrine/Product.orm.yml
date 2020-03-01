@@ -18,6 +18,11 @@ Elcodi\Component\Product\Entity\Product:
             type: string
             length: 255
             nullable: true
+        gtin:
+            column: gtin
+            type: string
+            length: 255
+            nullable: true
         slug:
             column: slug
             type: string

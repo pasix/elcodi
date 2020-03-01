@@ -64,6 +64,13 @@ class Product implements ProductInterface
     protected $sku;
 
     /**
+     * @var string | null
+     *
+     * Product GTIN
+     */
+    protected $gtin;
+
+    /**
      * @var int
      *
      * Product type
@@ -442,6 +449,21 @@ class Product implements ProductInterface
     public function setSku($sku)
     {
         $this->sku = $sku;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getGtin()
+    {
+        return $this->gtin;
+    }
+
+    public function setGtin(string $gtin = null): Product
+    {
+        $this->gtin = $gtin;
 
         return $this;
     }

@@ -55,6 +55,22 @@ interface PurchasableInterface
     public function setSku($sku);
 
     /**
+     * Gets the GTIN
+     *
+     * @return string|null
+     */
+    public function getGtin();
+
+    /**
+     * Sets the gtin.
+     *
+     * @param string $gtin
+     *
+     * @return $this Self object
+     */
+    public function setGtin(string $gtin = null);
+
+    /**
      * Gets the variant stock.
      *
      * @return int stock
