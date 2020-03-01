@@ -251,7 +251,7 @@ interface CouponInterface
     /**
      * @return bool
      */
-    public function isOnceForUser(): bool;
+    public function isOnceForUser();
 
     /**
      * @param bool $onceForUser

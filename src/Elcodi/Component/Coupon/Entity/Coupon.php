@@ -486,7 +486,7 @@ class Coupon implements CouponInterface
     /**
      * @return bool
      */
-    public function isOnceForUser(): bool
+    public function isOnceForUser()
     {
         return $this->onceForUser;
     }
